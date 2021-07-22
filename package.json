@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/server.js",
+  "type": "module",
   "scripts": {
-    "test": "nodemon -experimental-specifier-resolution=node src/server.js"
+    "dev": "nodemon --experimental-specifier-resolution=node src/server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/IanMiranda43/NodeRestApi/issues"
   },
-  "homepage": "https://github.com/IanMiranda43/NodeRestApi#readme"
+  "homepage": "https://github.com/IanMiranda43/NodeRestApi#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.31.0"
+  }
 }
