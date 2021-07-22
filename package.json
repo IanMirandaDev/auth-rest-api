@@ -1,0 +1,19 @@
+{
+  "name": "node_rest_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "nodemon -experimental-specifier-resolution=node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/IanMiranda43/NodeRestApi.git"
+  },
+  "author": "Ian Miranda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IanMiranda43/NodeRestApi/issues"
+  },
+  "homepage": "https://github.com/IanMiranda43/NodeRestApi#readme"
+}
