@@ -1,0 +1,5 @@
+DB_CONNECTION_STRING_DEV=mongodb://localhost:27017/database_dev
+
+DB_CONNECTION_STRING_TEST=mongodb://localhost:27017/database_test
+
+DB_CONNECTION_STRING_PROD=mongodb://localhost:27017/database_prod
