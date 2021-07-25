@@ -9,6 +9,13 @@ function errorObj(res, err, statusCode) {
 }
 
 class authController {
+    async show(req, res) {
+        const { email } = req.params;
+        const user = await User.findOne({ email });
+        
+        return res.json(user);
+    }
+
     async create(req, res) {
         const { email } = req.body;
 
