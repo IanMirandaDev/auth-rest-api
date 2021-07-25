@@ -9,7 +9,7 @@ const auth = new authController();
 
 routes.get('/user/:email', auth.show);
 
-routes.route('/auth')
-    .post(auth.create)
+routes.post('/register', auth.register);
+routes.post('/authenticate', auth.authenticate);
 
 export default routes;

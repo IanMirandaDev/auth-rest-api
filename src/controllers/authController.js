@@ -1,13 +1,5 @@
-import User from "../models/user";
-
-function errorObj(res, err, statusCode) {
-    return res.status(statusCode).json({
-        status: 'error',
-        message: 'Registration failed.',
-        error: err
-    });
-}
-
+import User from '../models/user';
+import bcrypt from 'bcrypt';
 class authController {
     async show(req, res) {
         const { email } = req.params;
@@ -16,10 +8,10 @@ class authController {
         return res.json(user);
     }
 
-    async create(req, res) {
-        const { email } = req.body;
-
+    async register(req, res) {
         try {
+            const { email } = req.body;
+
             if (await User.findOne({ email })) {
                 return res.json({
                     status: 'error',
@@ -48,6 +40,28 @@ class authController {
                 });
             });
         } catch (err) {
+            console.error(err);
+
+            return res.status(500);
+        }
+    }
+    
+    async authenticate(req, res) {
+        try {
+            const { email, password } = req.body;
+
+            const user = await User.findOne({ email }).select('+password');
+
+            if (!user) {
+                return res.json({ 'message': 'User not found' });
+            }
+            
+            if (!await bcrypt.compare(password.toString(), user.password)) {
+                return res.json({ 'message': 'Invalid password' });
+            }
+
+            return res.json(user);
+        } catch(err) {
             console.error(err);
 
             return res.status(500);
