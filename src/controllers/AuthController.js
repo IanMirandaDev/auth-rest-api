@@ -1,6 +1,12 @@
 import User from '../models/user';
 import bcrypt from 'bcrypt';
-class authController {
+import jwt from 'jsonwebtoken';
+import auth from '../config/auth.json'
+
+function jwtGenerate(id, exp) {
+    return jwt.sign({ id: id }, auth.secret, { expiresIn: exp });
+}
+class AuthController {
     async show(req, res) {
         const { email } = req.params;
         const user = await User.findOne({ email });
@@ -33,10 +39,13 @@ class authController {
 
                 user.password = undefined;
 
+                const token = jwtGenerate(user._id, '1h');
+
                 return res.status(200).json({
                     status: 'success',
                     message: `User ${req.body.name} has been created successfully!`,
-                    user: user
+                    user: user,
+                    token: token
                 });
             });
         } catch (err) {
@@ -60,7 +69,12 @@ class authController {
                 return res.json({ 'message': 'Invalid password' });
             }
 
-            return res.json(user);
+            const token = jwtGenerate(user._id, '1h');
+
+            return res.json({
+                user: user,
+                token: token
+            });
         } catch(err) {
             console.error(err);
 
@@ -69,4 +83,4 @@ class authController {
     }
 }
 
-export default authController;
+export default AuthController;

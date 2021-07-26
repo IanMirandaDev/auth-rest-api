@@ -1,15 +1,22 @@
 import Router from 'express';
-import authController from './controllers/authController';
+import AuthController from './controllers/AuthController';
+import ProjectController from './controllers/ProjectController'
+import authenticate from './middleware/auth'
 
 const routes = Router();
 
 routes.get('/', (req, res) => res.json('Hello world!!!'));
 
-const auth = new authController();
+const authController = new AuthController();
 
-routes.get('/user/:email', auth.show);
+routes.get('/user/:email', authController.show);
 
-routes.post('/register', auth.register);
-routes.post('/authenticate', auth.authenticate);
+routes.post('/register', authController.register);
+routes.post('/authenticate', authController.authenticate);
+
+routes.use('/', authenticate);
+
+const project = new ProjectController();
+routes.get('/project', project.show);
 
 export default routes;
