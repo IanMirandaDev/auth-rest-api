@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import auth from '../config/auth.json';
 
 export default async function authenticate(req, res, next) {
 	const { authorization } = req.headers;
@@ -16,7 +15,8 @@ export default async function authenticate(req, res, next) {
 		return res.status(401).json({ error: 'Malformatted token' });
 	}
 
-	jwt.verify(token[1], auth.secret, (err, decoded) => {
+	// eslint-disable-next-line no-undef
+	jwt.verify(token[1], process.env.JWT_SECRET, (err, decoded) => {
 		if (err) {
 			return res.status(401).json({ error: 'Invalid token' });
 		}

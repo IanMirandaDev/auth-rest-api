@@ -1,10 +1,10 @@
 import User from '../models/user';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import auth from '../config/auth.json';
 
 function jwtGenerate(id, exp) {
-	return jwt.sign({ id: id }, auth.secret, { expiresIn: exp });
+	// eslint-disable-next-line no-undef
+	return jwt.sign({ id: id }, process.env.JWT_SECRET, { expiresIn: exp });
 }
 class AuthController {
 	async show(req, res) {

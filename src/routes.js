@@ -1,7 +1,7 @@
 import Router from 'express';
-import AuthController from './controllers/AuthController';
-import ProjectController from './controllers/ProjectController';
-import authenticate from './middleware/auth';
+import AuthController from './app/controllers/AuthController';
+import ProjectController from './app/controllers/ProjectController';
+import authenticate from './app/middlewares/auth';
 
 const routes = Router();
 
