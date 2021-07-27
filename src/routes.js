@@ -7,12 +7,11 @@ const routes = Router();
 
 routes.get('/', (req, res) => res.json('Hello world!!!'));
 
-const authController = new AuthController();
+routes.get('/user/:email', AuthController.show);
 
-routes.get('/user/:email', authController.show);
-
-routes.post('/register', authController.register);
-routes.post('/authenticate', authController.authenticate);
+routes.post('/register', AuthController.register);
+routes.post('/authenticate', AuthController.authenticate);
+routes.post('/forgot-password', AuthController.forgotPassword);
 
 routes.use('/', authenticate);
 

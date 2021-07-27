@@ -1,6 +1,8 @@
 import User from '../models/user';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
+import mailService from '../services/mailService';
 
 function jwtGenerate(id, exp) {
 	// eslint-disable-next-line no-undef
@@ -41,17 +43,17 @@ class AuthController {
 
 				const token = jwtGenerate(user._id, '1h');
 
-				return res.status(200).json({
+				return res.json({
 					status: 'success',
 					message: `User ${req.body.name} has been created successfully!`,
 					user: user,
 					token: token
 				});
 			});
-		} catch (err) {
+		} catch(err) {
 			console.error(err);
-
-			return res.status(500);
+            
+			return res.json({ error: 'Server error on register. Please try it again' });
 		}
 	}
     
@@ -77,10 +79,51 @@ class AuthController {
 			});
 		} catch(err) {
 			console.error(err);
+            
+			return res.json({ error: 'Server error on authenticate. Please try it again' });
+		}
+	}
 
-			return res.status(500);
+	async forgotPassword(req, res) {
+		try {
+			const { email } = req.body;
+
+			const user = await User.findOne({ email });
+
+			if (!user) {
+				return res.json({ error: 'User not found' });
+			}
+            
+			const token = crypto.randomInt(100000, 999999);
+
+			const now = new Date();
+			now.setHours(now.getHours() + 1);
+
+			await user.update({
+				passwordResetToken: token,
+				passwordResetExpires: now
+			});
+
+			const sendMail = await mailService.forgotPassMail({
+				to: email,
+				subject: 'Forgot password',
+				text: `Here is your code to reset the password: ${token}`
+			});
+
+			if (!sendMail.accepted) {
+				return res.json({ error: 'Server error on send your reset password token. Please try it again' });
+			}
+
+			return res.json({
+				status: 'success',
+				message: 'Your reset password token has been sended to your email successfully'
+			});
+		} catch(err) {
+			console.error(err);
+
+			return res.json({ error: 'Server error on forgot password. Please try it again' });
 		}
 	}
 }
 
-export default AuthController;
+export default new AuthController();

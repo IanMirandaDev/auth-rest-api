@@ -1,7 +1,10 @@
+import 'dotenv/config';
+import process from 'process';
 import mongoose from 'mongoose';
+import connectionString from '../config/database';
 
-// eslint-disable-next-line no-undef
-mongoose.connect(process.env.DB_CONNECTION_STRING_DEV, {useNewUrlParser: true, useUnifiedTopology: true});
+const env = process.env.NODE_ENV || 'development';
+mongoose.connect(connectionString[env], {useNewUrlParser: true, useUnifiedTopology: true});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
