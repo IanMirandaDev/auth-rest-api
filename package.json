@@ -1,5 +1,5 @@
 {
-  "name": "node_rest_api",
+  "name": "auth-rest-api",
   "version": "1.0.0",
   "description": "",
   "main": "src/server.js",
