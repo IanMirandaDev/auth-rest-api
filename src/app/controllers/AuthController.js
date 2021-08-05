@@ -124,6 +124,36 @@ class AuthController {
 			return res.json({ error: 'Server error on forgot password. Please try it again' });
 		}
 	}
+
+	// Uncompleted
+	async resetPassword(req, res) {
+		try {
+			const { email, token, new_password } = req.body;
+
+			const user = await User.findOne({ email }).select('+passwordResetToken, +passwordResetExpires');
+
+			if (!user) {
+				return res.json({ error: 'User not found' });
+			}
+            
+			if (user.passwordResetToken !== token) {
+				return res.json({ error: 'Invalid reset password token' });
+			}
+            
+			const now = new Date();
+			if (now > user.passwordResetExpires) {
+				return res.json({ error: 'Expired reset password token' });
+			}
+
+			user.password = new_password;
+            
+			return res.json(user);
+		} catch(err) {
+			console.error(err);
+
+			return res.json({ error: 'Server error on reset password. Please try it again' });
+		}
+	}
 }
 
 export default new AuthController();

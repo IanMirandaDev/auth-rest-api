@@ -8,6 +8,6 @@ const app = express();
 app.use(express.json());
 app.use(routes);
 
-const port = process.env.SERVER_PORT;
+const port = process.env.PORT;
 
 app.listen(port, () => console.log(`Server is running at port ${port}`));
