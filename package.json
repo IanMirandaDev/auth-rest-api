@@ -7,16 +7,12 @@
   "scripts": {
     "dev": "nodemon --experimental-specifier-resolution=node src/server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/IanMiranda43/NodeRestApi.git"
-  },
   "author": "Ian Miranda",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/IanMiranda43/NodeRestApi/issues"
+    "url": "https://github.com/IanMiranda43/auth-rest-api/issues"
   },
-  "homepage": "https://github.com/IanMiranda43/NodeRestApi#readme",
+  "homepage": "https://github.com/IanMiranda43/auth-rest-api#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
